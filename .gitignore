@@ -1,0 +1,3 @@
+message/proto-go/*
+server/go/server
+client/go/client
