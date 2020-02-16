@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package messages;
+
+service AuthUser {
+    rpc CreateAuthUser (CreateAuthUserRequest) returns (CreateAuthUserReply) {}
+    rpc ReadAuthUser (ReadAuthUserRequest) returns (ReadAuthUserReply) {}
+    rpc UpdateAuthUser (UpdateAuthUserRequest) returns (UpdateAuthUserReply) {}
+    rpc DeleteAuthUser (DeleteAuthUserRequest) returns (DeleteAuthUserReply) {}
+}
+
+message AuthUserToken {
+    string method = 1;
+    string digest = 2;
+}
+
+message AuthUserInfo {
+    string username = 1;
+    string password = 2; // NOTE, password is hidden in ALL reply related messages
+    string emailaddr = 3;
+}
+
+message AuthUserReply {
+    string msg = 1;
+}
+
+message CreateAuthUserRequest {
+    AuthUserToken token = 1;
+    AuthUserInfo info = 2;
+}
+
+message CreateAuthUserReply {
+    AuthUserReply reply = 1;
+}
+
+message ReadAuthUserRequest {
+    AuthUserToken token = 1;
+}
+
+message ReadAuthUserReply {
+    AuthUserReply reply = 1;
+    repeated AuthUserInfo info = 2;
+}
+
+message UpdateAuthUserRequest {
+    AuthUserToken token = 1;
+    AuthUserInfo info = 2;
+}
+
+message UpdateAuthUserReply {
+    AuthUserReply reply = 1;
+    AuthUserInfo info = 2;
+}
+
+message DeleteAuthUserRequest {
+    AuthUserToken token = 1;
+}
+
+message DeleteAuthUserReply {
+    AuthUserReply reply = 1;
+}
