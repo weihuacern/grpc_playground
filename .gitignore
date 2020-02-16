@@ -1,3 +1,4 @@
 message/proto-go/*
+message/proto-python/*
 server/go/server
 client/go/client
