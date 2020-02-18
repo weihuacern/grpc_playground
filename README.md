@@ -17,10 +17,9 @@ pip3 install grpcio
 pip3 install grpcio-tools
 ```
 
-
 ## Items
-- Golang gRPC server and client
-- Python gRPC server and client
-- Java gRPC server and client
-- NodeJS gRPC server and client
-- An article to summary 
+- Golang gRPC server and client: Complete
+- Python gRPC server and client: Complete
+- Java gRPC server and client: Working
+- NodeJS gRPC server and client: Working
+- An article to summary: Working
