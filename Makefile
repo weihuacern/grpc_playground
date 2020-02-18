@@ -29,10 +29,12 @@ proto_python:
 ## rpc_python: Build Python gRPC server and client
 rpc_python: proto_python
 	rm -rf $(PYTHONOUTDIR)/*
+	pylint $(PYTHONSERVERPATH)/src/*
 	cp -r $(PROTOMSGBASE)/proto-python/* $(PYTHONOUTDIR)/
 	cp -r $(PYTHONSERVERPATH)/src/* $(PYTHONOUTDIR)/
 	python3 -m zipapp $(PYTHONOUTDIR) -m "server:entry" -o  $(PYTHONSERVERPATH)/server.pyz
 	rm -rf $(PYTHONOUTDIR)/*
+	pylint $(PYTHONCLIENTPATH)/src/*
 	cp -r $(PROTOMSGBASE)/proto-python/* $(PYTHONOUTDIR)/
 	cp -r $(PYTHONCLIENTPATH)/src/* $(PYTHONOUTDIR)/
 	python3 -m zipapp $(PYTHONOUTDIR) -m "client:entry" -o  $(PYTHONCLIENTPATH)/client.pyz

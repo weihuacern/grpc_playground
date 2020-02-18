@@ -13,6 +13,7 @@ go get -u google.golang.org/grpc
 
 ### Python
 ```
+pip3 install pylint==2.4.4
 pip3 install grpcio
 pip3 install grpcio-tools
 ```
