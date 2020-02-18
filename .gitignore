@@ -1,4 +1,7 @@
 message/proto-go/*
 message/proto-python/*
+out/*
 server/go/server
 client/go/client
+server/python/server.pyz
+client/python/client.pyz
