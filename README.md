@@ -20,8 +20,9 @@ pip3 install grpcio-tools
 
 ### Java
 ```bash
-mvn -B archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.example.grpc -DartifactId=server
-mvn -B archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.example.grpc -DartifactId=client
+sudo apt install default-jre
+sudo apt install default-jdk
+sudo apt install maven
 ```
 
 ## Items
@@ -29,7 +30,7 @@ mvn -B archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -Dgroup
 ### Stage 1
 - Golang gRPC server and client: Complete
 - Python gRPC server and client: Complete
-- Java gRPC server and client: Working
+- Java gRPC server and client: Complete
 - NodeJS gRPC server and client: Working
 - An article to summary: Working
 
