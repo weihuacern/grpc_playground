@@ -44,7 +44,7 @@ rpc_python: proto_python
 	python3 -m zipapp $(PYTHONOUTDIR) -m "client:entry" -o  $(PYTHONCLIENTPATH)/client.pyz
 	rm -rf $(PYTHONOUTDIR)/*
 
-## proto_java: Copy protobuf messages into java repo, no render
+## proto_java: Copy protobuf messages into Java repo, no render
 proto_java:
 	cp $(PROTOMSGBASE)/*.proto $(JAVASERVERPATH)/src/main/proto/
 	cp $(PROTOMSGBASE)/*.proto $(JAVASERVERPATH)/src/test/proto/
