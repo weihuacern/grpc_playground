@@ -4,14 +4,18 @@ GOCLIENTPATH := client/go
 PYTHONSERVERPATH := server/python
 PYTHONCLIENTPATH := client/python
 PYTHONOUTDIR := out
+JAVASERVERPATH := server/java/server
+JAVACLIENTPATH := client/java/client
 
-all: prep rpc_go rpc_python
+all: prep rpc_go rpc_python rpc_java
 
 ## prep: Prepare for compile
 prep:
 	mkdir -p $(PROTOMSGBASE)/proto-go/src/message
 	mkdir -p $(PROTOMSGBASE)/proto-python
 	mkdir -p $(PYTHONOUTDIR)
+	mkdir -p $(JAVASERVERPATH)/src/main/proto $(JAVASERVERPATH)/src/test/proto
+	mkdir -p $(JAVACLIENTPATH)/src/main/proto $(JAVACLIENTPATH)/src/test/proto
 
 ## proto_go: Render protobuf messages into Golang files
 proto_go:
@@ -40,6 +44,18 @@ rpc_python: proto_python
 	python3 -m zipapp $(PYTHONOUTDIR) -m "client:entry" -o  $(PYTHONCLIENTPATH)/client.pyz
 	rm -rf $(PYTHONOUTDIR)/*
 
+## proto_java: Copy protobuf messages into java repo, no render
+proto_java:
+	cp $(PROTOMSGBASE)/*.proto $(JAVASERVERPATH)/src/main/proto/
+	cp $(PROTOMSGBASE)/*.proto $(JAVASERVERPATH)/src/test/proto/
+	cp $(PROTOMSGBASE)/*.proto $(JAVACLIENTPATH)/src/main/proto/
+	cp $(PROTOMSGBASE)/*.proto $(JAVACLIENTPATH)/src/test/proto/
+
+## rpc_java: Build Java gRPC server and client
+rpc_java: proto_java
+	mvn -f $(JAVASERVERPATH)/pom.xml package
+	mvn -f $(JAVACLIENTPATH)/pom.xml package
+
 ## clean: Clean up
 clean:
 	rm -rf $(PROTOMSGBASE)/proto-go
@@ -49,7 +65,10 @@ clean:
 	rm -rf $(GOCLIENTPATH)/client
 	rm -rf $(PYTHONSERVERPATH)/server.pyz
 	rm -rf $(PYTHONCLIENTPATH)/client.pyz
-
+	rm -rf $(JAVASERVERPATH)/src/main/proto $(JAVASERVERPATH)/src/test/proto
+	rm -rf $(JAVACLIENTPATH)/src/main/proto $(JAVACLIENTPATH)/src/test/proto
+	mvn -f $(JAVASERVERPATH)/pom.xml clean
+	mvn -f $(JAVACLIENTPATH)/pom.xml clean
 
 ## help: Obtain help related information
 help: Makefile

@@ -5,3 +5,15 @@ server/go/server
 client/go/client
 server/python/server.pyz
 client/python/client.pyz
+server/java/server/target/*
+server/java/server/src/main/proto/*
+server/java/server/src/test/proto/*
+server/java/server/.classpath
+server/java/server/.project
+server/java/server/.settings/*
+client/java/client/target/*
+client/java/client/src/main/proto/*
+client/java/client/src/test/proto/*
+client/java/client/.classpath
+client/java/client/.project
+client/java/client/.settings/*
