@@ -16,6 +16,7 @@ prep:
 	mkdir -p $(PYTHONOUTDIR)
 	mkdir -p $(JAVASERVERPATH)/src/main/proto $(JAVASERVERPATH)/src/test/proto
 	mkdir -p $(JAVACLIENTPATH)/src/main/proto $(JAVACLIENTPATH)/src/test/proto
+	mkdir -p $(PROTOMSGBASE)/proto-js
 
 ## proto_go: Render protobuf messages into Golang files
 proto_go:
@@ -56,6 +57,10 @@ rpc_java: proto_java
 	mvn -f $(JAVASERVERPATH)/pom.xml package
 	mvn -f $(JAVACLIENTPATH)/pom.xml package
 
+## proto_js: Render protobuf messages into Javascript files
+proto_js:
+	grpc_tools_node_protoc --js_out=import_style=commonjs,binary:$(PROTOMSGBASE)/proto-js --grpc_out=$(PROTOMSGBASE)/proto-js --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` $(PROTOMSGBASE)/*.proto
+
 ## clean: Clean up
 clean:
 	rm -rf $(PROTOMSGBASE)/proto-go
@@ -69,6 +74,7 @@ clean:
 	rm -rf $(JAVACLIENTPATH)/src/main/proto $(JAVACLIENTPATH)/src/test/proto
 	mvn -f $(JAVASERVERPATH)/pom.xml clean
 	mvn -f $(JAVACLIENTPATH)/pom.xml clean
+	rm -rf $(PROTOMSGBASE)/proto-js
 
 ## help: Obtain help related information
 help: Makefile
