@@ -1,5 +1,6 @@
 message/proto-go/*
 message/proto-python/*
+message/proto-js/*
 out/*
 server/go/server
 client/go/client
