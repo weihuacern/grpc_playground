@@ -6,8 +6,10 @@ PYTHONCLIENTPATH := client/python
 PYTHONOUTDIR := out
 JAVASERVERPATH := server/java/server
 JAVACLIENTPATH := client/java/client
+JSSERVERPATH := server/js
+JSCLIENTPATH := client/js
 
-all: prep rpc_go rpc_python rpc_java
+all: prep rpc_go rpc_python rpc_java rpc_js
 
 ## prep: Prepare for compile
 prep:
@@ -61,6 +63,18 @@ rpc_java: proto_java
 proto_js:
 	grpc_tools_node_protoc --js_out=import_style=commonjs,binary:$(PROTOMSGBASE)/proto-js --grpc_out=$(PROTOMSGBASE)/proto-js --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` $(PROTOMSGBASE)/*.proto
 
+## rpc_js: Build NodeJS gRPC server and client
+rpc_js: proto_js
+	npm install --prefix $(JSSERVERPATH)/
+	cp -r $(PROTOMSGBASE)/proto-js/message $(JSSERVERPATH)/
+	pkg $(JSSERVERPATH)/src/server.js --output $(JSSERVERPATH)/server.exe
+	rm -rf $(JSSERVERPATH)/message
+	npm install --prefix $(JSCLIENTPATH)/
+	cp -r $(PROTOMSGBASE)/proto-js/message $(JSCLIENTPATH)/
+	pkg $(JSCLIENTPATH)/src/client.js --output $(JSCLIENTPATH)/client.exe
+	rm -rf $(JSCLIENTPATH)/message
+
+
 ## clean: Clean up
 clean:
 	rm -rf $(PROTOMSGBASE)/proto-go
@@ -75,6 +89,8 @@ clean:
 	mvn -f $(JAVASERVERPATH)/pom.xml clean
 	mvn -f $(JAVACLIENTPATH)/pom.xml clean
 	rm -rf $(PROTOMSGBASE)/proto-js
+	rm -rf $(JSSERVERPATH)/server.exe
+	rm -rf $(JSCLIENTPATH)/client.exe
 
 ## help: Obtain help related information
 help: Makefile
