@@ -18,3 +18,9 @@ client/java/client/src/test/proto/*
 client/java/client/.classpath
 client/java/client/.project
 client/java/client/.settings/*
+server/js/server.exe
+client/js/client.exe
+server/js/node_modules/*
+client/js/node_modules/*
+server/js/package-lock.json
+client/js/package-lock.json

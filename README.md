@@ -34,6 +34,7 @@ sudo apt install maven
 sudo apt install nodejs
 sudo apt install npm
 sudo npm install -g grpc-tools
+sudo npm install -g pkg
 ```
 
 ## Items
